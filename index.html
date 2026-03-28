@@ -1,246 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>KvK Contribution Ranking 2026/03 - King of Britain</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-:root {
-  --bg1:#0b1020; --bg2:#160f2e; --card:rgba(255,255,255,.08); --line:rgba(255,255,255,.12);
-  --text:#f7f2ff; --muted:#c7c3d6; --gold:#ffd86b; --cyan:#6ee7ff; --pink:#ff8bd6;
-}
-* { box-sizing:border-box; }
-body {
-  margin:0; color:var(--text); font-family:"Inter","Noto Sans JP",system-ui,sans-serif;
-  background:
-   radial-gradient(circle at top left, rgba(120,80,255,.30), transparent 32%),
-   radial-gradient(circle at top right, rgba(255,215,0,.22), transparent 24%),
-   radial-gradient(circle at bottom center, rgba(0,212,255,.22), transparent 25%),
-   linear-gradient(135deg, var(--bg1), var(--bg2));
-}
-.container { width:min(1280px, calc(100% - 32px)); margin:24px auto 48px; }
-.hero {
-  padding:32px 32px 26px; border:1px solid var(--line); border-radius:28px;
-  background:linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
-  box-shadow:0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
-  backdrop-filter: blur(12px);
-}
-.hero-top {
-  display:grid; grid-template-columns:minmax(0,1fr) 250px; align-items:start; gap:24px;
-}
-.hero-heading {
-  min-width:0; padding-right:8px;
-}
-.title { text-align:center; margin:0; font-size:clamp(24px,3vw,36px); font-weight:900; letter-spacing:.02em; line-height:1.2; }
-.subtitle { text-align:center; margin:8px 0 0; color:var(--muted); font-size:14px; }
-.scoring {
-  position:static; width:250px; padding:16px 18px; border-radius:20px;
-  background:linear-gradient(135deg, rgba(255,216,107,.18), rgba(255,139,214,.12));
-  border:1px solid rgba(255,255,255,.16); box-shadow:0 8px 24px rgba(0,0,0,.18);
-}
-.scoring h4 { margin:0 0 10px; font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:#fff7cf; }
-.scoring .line { display:flex; justify-content:space-between; gap:16px; font-size:13px; padding:5px 0; color:#fff; }
-.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:20px; }
-.card {
-  border:1px solid var(--line); border-radius:24px; padding:18px 18px 16px;
-  background:linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
-  box-shadow:0 12px 32px rgba(0,0,0,.20);
-}
-.top-card h3 { margin:2px 0 14px; font-size:20px; }
-.mini-rank-list { display:grid; gap:10px; }
-.mini-rank {
-  display:grid; grid-template-columns:98px 1fr auto; align-items:center; gap:14px;
-  padding:12px 14px; border-radius:18px; border:1px solid rgba(255,255,255,.08);
-}
-.mini-rank-left { display:flex; align-items:center; gap:8px; font-weight:800; }
-.medal { font-size:24px; }
-.place { color:#fff; }
-.mini-rank-name { font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.mini-rank-value { font-weight:800; color:#fff7cf; }
-.chart-wrap { margin-top:22px; }
-.chart-card { padding:22px; }
-.chart-card h3, .table-card h3 { margin:0 0 14px; font-size:22px; }
-canvas { width:100% !important; height:520px !important; }
-.table-card { margin-top:22px; }
-.dataTables_wrapper .dataTables_filter input,
-.dataTables_wrapper .dataTables_length select {
-  background:rgba(255,255,255,.08); color:white; border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:6px 10px;
-}
-table.dataTable thead th {
-  background:linear-gradient(135deg, rgba(255,216,107,.26), rgba(110,231,255,.16));
-  color:white !important; border-bottom:none !important;
-}
-table.dataTable tbody tr {
-  background:rgba(255,255,255,.02);
-}
-table.dataTable tbody td { color:#f7f2ff; }
-.dataTables_wrapper .dataTables_info,
-.dataTables_wrapper .dataTables_length,
-.dataTables_wrapper .dataTables_filter,
-.dataTables_wrapper .dataTables_paginate {
-  color:#e7e0ff !important;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-  color:#fff !important; border-radius:10px !important; border:1px solid transparent !important;
-}
-.note { margin-top:10px; color:var(--muted); font-size:12px; }
-@media (max-width: 960px) {
-  .grid-3 { grid-template-columns:1fr; }
-  .scoring { position:static; width:auto; margin:18px auto 0; }
-  .hero { padding-top:28px; }
-}
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>KvK Contribution Ranking 2026/03 - King of Britain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"/>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg1:#0f1021; --bg2:#171a35; --panel:#14182e; --panel2:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12); --text:#f5f7ff; --muted:#b7bfdc; --gold:#f6d365;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; color:var(--text); font-family:Inter,system-ui,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(246,211,101,.16), transparent 25%),
+        radial-gradient(circle at top right, rgba(251,194,235,.18), transparent 25%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+    .container { max-width: 1440px; margin: 0 auto; padding: 28px 20px 56px; }
+    .hero {
+      display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:20px; align-items:start; margin-bottom:24px;
+    }
+    .hero-title, .scoring, .section {
+      border:1px solid var(--line); border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow:0 12px 36px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .hero-title { padding:24px 28px; text-align:center; min-height:120px; display:flex; flex-direction:column; justify-content:center; }
+    .hero-title h1 { margin:0; font-size:clamp(1.4rem,2.2vw,2.15rem); line-height:1.22; font-weight:800; }
+    .hero-sub { margin-top:10px; color:var(--muted); font-size:.96rem; }
+    .scoring { padding:20px; }
+    .scoring h2 { margin:0 0 12px; font-size:1rem; letter-spacing:.08em; text-transform:uppercase; }
+    .scoring ul { margin:0; padding-left:18px; color:#fff; }
+    .scoring li { margin:8px 0; }
+    .top-grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px; margin-bottom:22px; }
+    .top-card {
+      padding:18px;
+      border:1px solid var(--line); border-radius:24px;
+      background:
+        linear-gradient(135deg, rgba(246,211,101,.18), rgba(255,255,255,.06)),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow:0 12px 36px rgba(0,0,0,.22);
+    }
+    .top-card h3 { margin:0 0 14px; font-size:1rem; }
+    .card-rank-item {
+      display:flex; gap:12px; align-items:center; padding:10px 0; border-top:1px solid rgba(255,255,255,.08);
+    }
+    .card-rank-item:first-of-type { border-top:0; }
+    .medal { font-size:1.4rem; width:34px; text-align:center; flex:0 0 34px; }
+    .rank-info { min-width:0; display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; }
+    .rank-name { font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .rank-value { color:var(--gold); font-weight:700; }
+    .section { padding:22px; margin-bottom:22px; }
+    .section h2 { margin:0 0 16px; font-size:1.15rem; }
+    .chart-wrap { height:700px; }
+    table.dataTable { width:100% !important; color:var(--text); }
+    table.dataTable thead th {
+      background:rgba(255,255,255,.08); color:var(--text); border-bottom:1px solid var(--line) !important;
+    }
+    table.dataTable tbody td { color:var(--text); background:rgba(255,255,255,.02); }
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate { color:var(--text) !important; margin:8px 0; }
+    .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_length select {
+      background:#0d1125; color:#fff; border:1px solid rgba(255,255,255,.18); border-radius:10px; padding:6px 8px;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      color:#fff !important; border-radius:10px !important;
+    }
+    .footer-note { color:var(--muted); font-size:.88rem; margin-top:8px; }
+    @media (max-width: 1100px) {
+      .top-grid { grid-template-columns:repeat(2, minmax(0,1fr)); }
+      .hero { grid-template-columns:1fr; }
+    }
+    @media (max-width: 640px) {
+      .top-grid { grid-template-columns:1fr; }
+      .container { padding:20px 14px 40px; }
+      .section, .hero-title, .scoring, .top-card { border-radius:20px; }
+      .chart-wrap { height:560px; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <section class="hero">
-      <div class="hero-top">
-        <div class="hero-heading">
-          <h1 class="title">KvK Contribution Ranking 2026/03 - King of Britain</h1>
-          <p class="subtitle">Calculated from common IDs between 20260205 and 20260311, with Acclaim joined from 20260324.</p>
-        </div>
-        <div class="scoring">
-          <h4>DKP Scoring</h4>
-          <div class="line"><span>T5 kills</span><strong>5 pts</strong></div>
-          <div class="line"><span>T4 kills</span><strong>1 pt</strong></div>
-          <div class="line"><span>Battle deaths</span><strong>15 pts</strong></div>
-        </div>
+    <header class="hero">
+      <div class="hero-title">
+        <h1>KvK Contribution Ranking 2026/03 - King of Britain</h1>
+        <div class="hero-sub">Updated with sub-account battle deaths and Acclaim points</div>
       </div>
-    </section>
+      <aside class="scoring">
+        <h2>DKP Scoring</h2>
+        <ul>
+          <li>T5 kills = 5 pts</li>
+          <li>T4 kills = 1 pt</li>
+          <li>Battle deaths = 15 pts</li>
+          <li>Farm battle deaths = 7.5 pts</li>
+        </ul>
+      </aside>
+    </header>
 
-    <div class="grid-3">
+    <div class="top-grid">
       
-    <section class="card top-card">
+    <section class="top-card">
       <h3>T5 Kill Diff Top 5</h3>
-      <div class="mini-rank-list">
-        
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(255,215,0,.28), rgba(255,140,0,.18));">
-          <div class="mini-rank-left"><span class="medal">🥇</span><span class="place">#1</span></div>
-          <div class="mini-rank-name">AREA88</div>
-          <div class="mini-rank-value">102,768,151</div>
+      
+        <div class="card-rank-item">
+          <div class="medal">🥇</div>
+          <div class="rank-info">
+            <div class="rank-name">AREA88</div>
+            <div class="rank-value">102,768,151</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(192,192,192,.28), rgba(120,120,120,.16));">
-          <div class="mini-rank-left"><span class="medal">🥈</span><span class="place">#2</span></div>
-          <div class="mini-rank-name">BADRO月光</div>
-          <div class="mini-rank-value">65,797,313</div>
+        <div class="card-rank-item">
+          <div class="medal">🥈</div>
+          <div class="rank-info">
+            <div class="rank-name">BADRO月光</div>
+            <div class="rank-value">65,797,313</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(205,127,50,.28), rgba(139,69,19,.16));">
-          <div class="mini-rank-left"><span class="medal">🥉</span><span class="place">#3</span></div>
-          <div class="mini-rank-name">GREGO</div>
-          <div class="mini-rank-value">61,779,946</div>
+        <div class="card-rank-item">
+          <div class="medal">🥉</div>
+          <div class="rank-info">
+            <div class="rank-name">GREGO</div>
+            <div class="rank-value">61,779,946</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(120,80,255,.22), rgba(0,212,255,.14));">
-          <div class="mini-rank-left"><span class="medal">🏅</span><span class="place">#4</span></div>
-          <div class="mini-rank-name">DBsわんこ先生</div>
-          <div class="mini-rank-value">58,818,843</div>
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">DBsわんこ先生</div>
+            <div class="rank-value">58,818,843</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(255,80,160,.20), rgba(255,196,0,.14));">
-          <div class="mini-rank-left"><span class="medal">🏅</span><span class="place">#5</span></div>
-          <div class="mini-rank-name">iLTWˣ</div>
-          <div class="mini-rank-value">58,578,772</div>
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">iLTWˣ</div>
+            <div class="rank-value">58,578,772</div>
+          </div>
         </div>
         
-      </div>
     </section>
     
       
-    <section class="card top-card">
+    <section class="top-card">
       <h3>Dead Diff Top 5</h3>
-      <div class="mini-rank-list">
-        
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(255,215,0,.28), rgba(255,140,0,.18));">
-          <div class="mini-rank-left"><span class="medal">🥇</span><span class="place">#1</span></div>
-          <div class="mini-rank-name">PANKO ᴘᴀ</div>
-          <div class="mini-rank-value">3,335,196</div>
+      
+        <div class="card-rank-item">
+          <div class="medal">🥇</div>
+          <div class="rank-info">
+            <div class="rank-name">PANKO ᴘᴀ</div>
+            <div class="rank-value">3,335,196</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(192,192,192,.28), rgba(120,120,120,.16));">
-          <div class="mini-rank-left"><span class="medal">🥈</span><span class="place">#2</span></div>
-          <div class="mini-rank-name">ᴾᴴGodLuvzÜ</div>
-          <div class="mini-rank-value">2,810,142</div>
+        <div class="card-rank-item">
+          <div class="medal">🥈</div>
+          <div class="rank-info">
+            <div class="rank-name">ᴾᴴGodLuvzÜ</div>
+            <div class="rank-value">2,810,142</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(205,127,50,.28), rgba(139,69,19,.16));">
-          <div class="mini-rank-left"><span class="medal">🥉</span><span class="place">#3</span></div>
-          <div class="mini-rank-name">ヒデ1</div>
-          <div class="mini-rank-value">2,584,899</div>
+        <div class="card-rank-item">
+          <div class="medal">🥉</div>
+          <div class="rank-info">
+            <div class="rank-name">ヒデ1</div>
+            <div class="rank-value">2,584,899</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(120,80,255,.22), rgba(0,212,255,.14));">
-          <div class="mini-rank-left"><span class="medal">🏅</span><span class="place">#4</span></div>
-          <div class="mini-rank-name">HENタイ紳士銀</div>
-          <div class="mini-rank-value">2,449,324</div>
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">HENタイ紳士銀</div>
+            <div class="rank-value">2,449,324</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(255,80,160,.20), rgba(255,196,0,.14));">
-          <div class="mini-rank-left"><span class="medal">🏅</span><span class="place">#5</span></div>
-          <div class="mini-rank-name">PAMU pi</div>
-          <div class="mini-rank-value">2,358,637</div>
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">PAMU pi</div>
+            <div class="rank-value">2,358,637</div>
+          </div>
         </div>
         
-      </div>
     </section>
     
       
-    <section class="card top-card">
+    <section class="top-card">
+      <h3>Farm Account Dead Top 5</h3>
+      
+        <div class="card-rank-item">
+          <div class="medal">🥇</div>
+          <div class="rank-info">
+            <div class="rank-name">すだこ</div>
+            <div class="rank-value">6,454,551</div>
+          </div>
+        </div>
+        
+        <div class="card-rank-item">
+          <div class="medal">🥈</div>
+          <div class="rank-info">
+            <div class="rank-name">Flämän</div>
+            <div class="rank-value">5,998,964</div>
+          </div>
+        </div>
+        
+        <div class="card-rank-item">
+          <div class="medal">🥉</div>
+          <div class="rank-info">
+            <div class="rank-name">ᴰᴮˢmattari</div>
+            <div class="rank-value">5,431,384</div>
+          </div>
+        </div>
+        
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">BADRO月光</div>
+            <div class="rank-value">4,743,611</div>
+          </div>
+        </div>
+        
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">JustHopper</div>
+            <div class="rank-value">3,795,505</div>
+          </div>
+        </div>
+        
+    </section>
+    
+      
+    <section class="top-card">
       <h3>Acclaim Top 5</h3>
-      <div class="mini-rank-list">
-        
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(255,215,0,.28), rgba(255,140,0,.18));">
-          <div class="mini-rank-left"><span class="medal">🥇</span><span class="place">#1</span></div>
-          <div class="mini-rank-name">AREA88</div>
-          <div class="mini-rank-value">31,158,566</div>
+      
+        <div class="card-rank-item">
+          <div class="medal">🥇</div>
+          <div class="rank-info">
+            <div class="rank-name">AREA88</div>
+            <div class="rank-value">31,158,566</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(192,192,192,.28), rgba(120,120,120,.16));">
-          <div class="mini-rank-left"><span class="medal">🥈</span><span class="place">#2</span></div>
-          <div class="mini-rank-name">BADRO月光</div>
-          <div class="mini-rank-value">20,626,719</div>
+        <div class="card-rank-item">
+          <div class="medal">🥈</div>
+          <div class="rank-info">
+            <div class="rank-name">BADRO月光</div>
+            <div class="rank-value">20,626,719</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(205,127,50,.28), rgba(139,69,19,.16));">
-          <div class="mini-rank-left"><span class="medal">🥉</span><span class="place">#3</span></div>
-          <div class="mini-rank-name">DBsわんこ先生</div>
-          <div class="mini-rank-value">19,364,703</div>
+        <div class="card-rank-item">
+          <div class="medal">🥉</div>
+          <div class="rank-info">
+            <div class="rank-name">DBsわんこ先生</div>
+            <div class="rank-value">19,364,703</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(120,80,255,.22), rgba(0,212,255,.14));">
-          <div class="mini-rank-left"><span class="medal">🏅</span><span class="place">#4</span></div>
-          <div class="mini-rank-name">GREGO</div>
-          <div class="mini-rank-value">18,942,759</div>
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">GREGO</div>
+            <div class="rank-value">18,942,759</div>
+          </div>
         </div>
         
-        <div class="mini-rank" style="background:linear-gradient(135deg, rgba(255,80,160,.20), rgba(255,196,0,.14));">
-          <div class="mini-rank-left"><span class="medal">🏅</span><span class="place">#5</span></div>
-          <div class="mini-rank-name">iLTWˣ</div>
-          <div class="mini-rank-value">17,422,017</div>
+        <div class="card-rank-item">
+          <div class="medal">🏅</div>
+          <div class="rank-info">
+            <div class="rank-name">iLTWˣ</div>
+            <div class="rank-value">17,422,017</div>
+          </div>
         </div>
         
-      </div>
     </section>
     
     </div>
 
-    <section class="card chart-card chart-wrap">
-      <h3>Top 20 DKP</h3>
-      <canvas id="dkpChart"></canvas>
-      <div class="note">The chart is sorted by DKP in descending order.</div>
+    <section class="section">
+      <h2>TOP20 DKP Horizontal Bar Chart</h2>
+      <div class="chart-wrap">
+        <canvas id="dkpChart"></canvas>
+      </div>
     </section>
 
-    <section class="card table-card">
-      <h3>All Players</h3>
-      <table id="rankingTable" class="display nowrap" style="width:100%">
+    <section class="section">
+      <h2>All Players DataTable</h2>
+      <table id="rankingTable" class="display nowrap">
         <thead>
           <tr>
             <th>Rank</th>
@@ -248,73 +312,67 @@ table.dataTable tbody td { color:#f7f2ff; }
             <th>T4 Kill Diff</th>
             <th>T5 Kill Diff</th>
             <th>Dead Diff</th>
+            <th>Farm Dead Diff</th>
             <th>DKP</th>
             <th>Acclaim</th>
-            <th>ID</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>1</td><td>AREA88</td><td>14,534,396</td><td>102,768,151</td><td>1,739,671</td><td>554,470,216</td><td>31,158,566</td><td>77254893</td></tr><tr><td>2</td><td>BADRO月光</td><td>8,190,600</td><td>65,797,313</td><td>1,774,424</td><td>363,793,525</td><td>20,626,719</td><td>43075276</td></tr><tr><td>3</td><td>DBsわんこ先生</td><td>14,764,636</td><td>58,818,843</td><td>1,807,726</td><td>335,974,741</td><td>19,364,703</td><td>43663767</td></tr><tr><td>4</td><td>GREGO</td><td>6,270,273</td><td>61,779,946</td><td>1,233,886</td><td>333,678,293</td><td>18,942,759</td><td>139750695</td></tr><tr><td>5</td><td>iLTWˣ</td><td>4,386,392</td><td>58,578,772</td><td>961,328</td><td>311,700,172</td><td>17,422,017</td><td>59332575</td></tr><tr><td>6</td><td>Flämän</td><td>5,690,940</td><td>39,043,250</td><td>1,026,228</td><td>216,300,610</td><td>12,125,214</td><td>94718300</td></tr><tr><td>7</td><td>Edward  NewGate</td><td>6,025,822</td><td>37,852,788</td><td>881,509</td><td>208,512,397</td><td>13,426,486</td><td>53582467</td></tr><tr><td>8</td><td>ᴰᴮˢmattari</td><td>5,170,760</td><td>34,751,647</td><td>1,360,268</td><td>199,333,015</td><td>10,728,602</td><td>68044185</td></tr><tr><td>9</td><td>HENタイ紳士銀</td><td>9,767,416</td><td>29,625,230</td><td>2,449,324</td><td>194,633,426</td><td>10,728,337</td><td>45767387</td></tr><tr><td>10</td><td>お菊のさら</td><td>5,352,545</td><td>31,456,515</td><td>1,117,841</td><td>179,402,735</td><td>11,979,002</td><td>58707725</td></tr><tr><td>11</td><td>ひよこひーろー</td><td>3,040,293</td><td>28,646,991</td><td>1,688,501</td><td>171,602,763</td><td>9,789,303</td><td>66594541</td></tr><tr><td>12</td><td>JustHopper</td><td>5,921,501</td><td>29,421,947</td><td>960,822</td><td>167,443,566</td><td>9,532,518</td><td>46394818</td></tr><tr><td>13</td><td>black foot S</td><td>4,503,657</td><td>27,047,358</td><td>1,573,138</td><td>163,337,517</td><td>9,047,678</td><td>61162793</td></tr><tr><td>14</td><td>Mụ Q Dùng</td><td>2,362,673</td><td>29,004,067</td><td>809,671</td><td>159,528,073</td><td>8,438,965</td><td>139755811</td></tr><tr><td>15</td><td>猫猫乄りむるん</td><td>4,071,612</td><td>25,515,850</td><td>1,690,643</td><td>157,010,507</td><td>8,596,893</td><td>68380154</td></tr><tr><td>16</td><td>くそPANDA</td><td>4,456,948</td><td>22,005,674</td><td>2,306,858</td><td>149,088,188</td><td>8,000,689</td><td>60449460</td></tr><tr><td>17</td><td>ᴰᴮˢZunさん</td><td>5,299,716</td><td>24,627,464</td><td>1,369,422</td><td>148,978,366</td><td>8,414,161</td><td>93309377</td></tr><tr><td>18</td><td>すだこ</td><td>6,163,207</td><td>25,779,970</td><td>911,578</td><td>148,736,727</td><td>8,490,054</td><td>103748058</td></tr><tr><td>19</td><td>ーNちゃー</td><td>3,700,632</td><td>26,225,110</td><td>877,064</td><td>147,982,142</td><td>8,917,513</td><td>58200727</td></tr><tr><td>20</td><td>ظzaza</td><td>4,301,471</td><td>23,369,117</td><td>1,769,296</td><td>147,686,496</td><td>8,415,341</td><td>139697754</td></tr><tr><td>21</td><td>ᴰᴮsみすたーKJ</td><td>2,473,832</td><td>24,212,725</td><td>1,561,372</td><td>146,958,037</td><td>8,261,597</td><td>64529276</td></tr><tr><td>22</td><td>Invictus1888</td><td>5,074,221</td><td>24,499,454</td><td>849,375</td><td>140,312,116</td><td>7,637,407</td><td>60925629</td></tr><tr><td>23</td><td>PANKO ᴘᴀ</td><td>4,254,462</td><td>17,193,240</td><td>3,335,196</td><td>140,248,602</td><td>6,990,767</td><td>110378969</td></tr><tr><td>24</td><td>KK親父KK</td><td>2,579,772</td><td>17,313,684</td><td>2,355,335</td><td>124,478,217</td><td>6,596,128</td><td>65451136</td></tr><tr><td>25</td><td>ᴰᴮᶳﾗﾝﾗﾝ</td><td>3,649,913</td><td>17,434,486</td><td>2,047,782</td><td>121,539,073</td><td>6,670,374</td><td>68132383</td></tr><tr><td>26</td><td>DBsにゃんこ先生</td><td>3,210,172</td><td>20,382,630</td><td>917,152</td><td>118,880,602</td><td>7,583,758</td><td>45862797</td></tr><tr><td>27</td><td>B u Z Z e r</td><td>7,000,050</td><td>15,718,822</td><td>2,140,799</td><td>117,706,145</td><td>7,150,377</td><td>144854097</td></tr><tr><td>28</td><td>ᴾᴴGodLuvzÜ</td><td>6,028,812</td><td>12,822,337</td><td>2,810,142</td><td>112,292,627</td><td>6,090,396</td><td>136307950</td></tr><tr><td>29</td><td>ᴰᴮᶳじん太</td><td>3,325,156</td><td>16,929,543</td><td>1,297,563</td><td>107,436,316</td><td>5,917,952</td><td>61773105</td></tr><tr><td>30</td><td>ᴷˣLEGACY</td><td>4,552,845</td><td>11,202,732</td><td>2,334,256</td><td>95,580,345</td><td>4,832,510</td><td>60927185</td></tr><tr><td>31</td><td>亗pote sara亗</td><td>2,950,836</td><td>15,843,033</td><td>711,513</td><td>92,838,696</td><td>5,938,955</td><td>113037440</td></tr><tr><td>32</td><td>AhmadSn</td><td>1,773,902</td><td>14,198,656</td><td>479,029</td><td>79,952,617</td><td>3,811,524</td><td>139739577</td></tr><tr><td>33</td><td>ᴰᴮˢ ジェダイ</td><td>2,353,478</td><td>11,553,230</td><td>1,316,201</td><td>79,862,643</td><td>4,805,838</td><td>60845037</td></tr><tr><td>34</td><td>ᴰᴮˢアオクマ</td><td>1,784,176</td><td>11,924,361</td><td>882,860</td><td>74,648,881</td><td>4,730,114</td><td>43709339</td></tr><tr><td>35</td><td>乂 Senator 乂</td><td>1,272,986</td><td>8,502,198</td><td>1,464,402</td><td>65,750,006</td><td>2,781,152</td><td>109504753</td></tr><tr><td>36</td><td>Haruki 6</td><td>5,432,977</td><td>7,589,466</td><td>1,353,044</td><td>63,675,967</td><td>3,421,781</td><td>70440309</td></tr><tr><td>37</td><td>DBSねね</td><td>1,771,391</td><td>8,023,637</td><td>957,718</td><td>56,255,346</td><td>3,198,384</td><td>44207980</td></tr><tr><td>38</td><td>乂 Pazzito 乂</td><td>1,384,072</td><td>8,206,836</td><td>878,722</td><td>55,599,082</td><td>3,144,198</td><td>66531746</td></tr><tr><td>39</td><td>PAMU pi</td><td>1,345,192</td><td>3,373,382</td><td>2,358,637</td><td>53,591,657</td><td>2,120,836</td><td>146950687</td></tr><tr><td>40</td><td>魁ゆきJapan魁</td><td>2,927,487</td><td>5,534,850</td><td>1,362,298</td><td>51,036,207</td><td>2,632,583</td><td>68003723</td></tr><tr><td>41</td><td>ヒデ1</td><td>171,341</td><td>211,677</td><td>2,584,899</td><td>40,003,211</td><td>270,546</td><td>90170627</td></tr><tr><td>42</td><td>ᴰᴮˢ khang</td><td>2,550,765</td><td>3,292,179</td><td>1,390,591</td><td>39,870,525</td><td>2,173,761</td><td>139143620</td></tr><tr><td>43</td><td>しんなり</td><td>1,701,748</td><td>5,066,683</td><td>832,435</td><td>39,521,688</td><td>2,341,288</td><td>50262455</td></tr><tr><td>44</td><td>ChosHopper</td><td>913,316</td><td>1,773,958</td><td>1,973,520</td><td>39,385,906</td><td>1,214,394</td><td>68037525</td></tr><tr><td>45</td><td>ᴳᴰ kinari</td><td>998,219</td><td>4,491,520</td><td>1,044,917</td><td>39,129,574</td><td>1,796,839</td><td>70540811</td></tr><tr><td>46</td><td>Flämänboy</td><td>473,702</td><td>1,595,018</td><td>2,040,960</td><td>39,063,192</td><td>941,645</td><td>120970200</td></tr><tr><td>47</td><td>まったり覆面マン</td><td>554,864</td><td>895,766</td><td>1,991,530</td><td>34,906,644</td><td>674,812</td><td>146351288</td></tr><tr><td>48</td><td>PANKO2号ᴘᴀ</td><td>1,920,498</td><td>2,172,516</td><td>1,468,854</td><td>34,815,888</td><td>1,349,991</td><td>121387743</td></tr><tr><td>49</td><td>まったり貯金箱</td><td>893,358</td><td>1,158,089</td><td>1,868,139</td><td>34,705,888</td><td>791,546</td><td>70601625</td></tr><tr><td>50</td><td>ᴷˣchipaちぱ姫</td><td>601,978</td><td>2,381,914</td><td>1,465,035</td><td>34,487,073</td><td>1,290,962</td><td>57471795</td></tr><tr><td>51</td><td>あさみᴘᴀ</td><td>1,571,991</td><td>5,147,139</td><td>471,033</td><td>34,373,181</td><td>2,205,504</td><td>89297222</td></tr><tr><td>52</td><td>ᴰᴮᶳゆたそん</td><td>1,715,464</td><td>4,490,761</td><td>677,258</td><td>34,328,139</td><td>2,098,602</td><td>61815957</td></tr><tr><td>53</td><td>Gsub2</td><td>300,636</td><td>435,866</td><td>2,112,416</td><td>34,166,206</td><td>401,083</td><td>168829590</td></tr><tr><td>54</td><td>01 Jin</td><td>818,123</td><td>1,391,779</td><td>1,750,326</td><td>34,031,908</td><td>1,050,639</td><td>139796188</td></tr><tr><td>55</td><td>ᴰᴮˢnull</td><td>969,351</td><td>3,534,634</td><td>978,101</td><td>33,314,036</td><td>1,522,530</td><td>169265290</td></tr><tr><td>56</td><td>LーELF</td><td>964,446</td><td>3,774,038</td><td>845,754</td><td>32,520,946</td><td>1,595,690</td><td>169303654</td></tr><tr><td>57</td><td>まだこ</td><td>387,481</td><td>1,143,776</td><td>1,728,660</td><td>32,036,261</td><td>751,756</td><td>123810128</td></tr><tr><td>58</td><td>ᴰᴮˢRanran</td><td>988,558</td><td>1,451,782</td><td>1,579,198</td><td>31,935,438</td><td>861,774</td><td>102497955</td></tr><tr><td>59</td><td>capitangoon</td><td>1,390,419</td><td>3,438,444</td><td>833,856</td><td>31,090,479</td><td>1,791,896</td><td>67031621</td></tr><tr><td>60</td><td>Gsub1</td><td>1,251,325</td><td>1,305,984</td><td>1,339,177</td><td>27,868,900</td><td>857,513</td><td>141289745</td></tr><tr><td>61</td><td>khang 62</td><td>790,896</td><td>905,924</td><td>1,496,657</td><td>27,770,371</td><td>137,663</td><td>142341891</td></tr><tr><td>62</td><td>NちゃII1ー</td><td>862,100</td><td>1,594,675</td><td>1,178,521</td><td>26,513,290</td><td>918,061</td><td>44095745</td></tr><tr><td>63</td><td>まったり農場</td><td>302,713</td><td>472,025</td><td>1,571,715</td><td>26,238,563</td><td>437,893</td><td>101379657</td></tr><tr><td>64</td><td>エリアS</td><td>383,967</td><td>1,361,939</td><td>1,255,948</td><td>26,032,882</td><td>731,376</td><td>92241169</td></tr><tr><td>65</td><td>コロスケナリ</td><td>1,080,205</td><td>1,695,685</td><td>1,091,408</td><td>25,929,750</td><td>983,497</td><td>68011392</td></tr><tr><td>66</td><td>FARM SIRAhmadSn</td><td>264,354</td><td>223,361</td><td>1,601,142</td><td>25,398,289</td><td>296,279</td><td>144773643</td></tr><tr><td>67</td><td>badro farm 2</td><td>180,109</td><td>354,221</td><td>1,520,505</td><td>24,758,789</td><td>283,914</td><td>169927719</td></tr><tr><td>68</td><td>small Badro</td><td>780,843</td><td>1,206,410</td><td>1,115,332</td><td>23,542,873</td><td>608,383</td><td>151138843</td></tr><tr><td>69</td><td>やきだこ</td><td>486,053</td><td>1,277,586</td><td>1,075,360</td><td>23,004,383</td><td>717,987</td><td>121226145</td></tr><tr><td>70</td><td>Flämän畑</td><td>893,558</td><td>755,547</td><td>1,218,601</td><td>22,950,308</td><td>531,192</td><td>97648070</td></tr><tr><td>71</td><td>いいだこ</td><td>374,790</td><td>629,828</td><td>1,259,834</td><td>22,421,440</td><td>482,468</td><td>121220386</td></tr><tr><td>72</td><td>Flämän水産</td><td>311,009</td><td>932,223</td><td>1,114,926</td><td>21,696,014</td><td>563,000</td><td>129543797</td></tr><tr><td>73</td><td>アオクマAoo</td><td>309,922</td><td>739,825</td><td>1,061,896</td><td>19,937,487</td><td>477,424</td><td>62488149</td></tr><tr><td>74</td><td>みずだこ</td><td>315,879</td><td>635,330</td><td>1,037,815</td><td>19,059,754</td><td>423,138</td><td>149335650</td></tr><tr><td>75</td><td>BADRO fm</td><td>324,082</td><td>644,252</td><td>994,083</td><td>18,456,587</td><td>361,700</td><td>153189835</td></tr><tr><td>76</td><td>ʏᴅにゃんこ先生</td><td>556,531</td><td>919,932</td><td>868,144</td><td>18,178,351</td><td>528,914</td><td>89301905</td></tr><tr><td>77</td><td>さらにゃんᴶᴺ</td><td>552,284</td><td>635,304</td><td>901,531</td><td>17,251,769</td><td>426,047</td><td>73009795</td></tr><tr><td>78</td><td>badro farm4</td><td>99,859</td><td>29,912</td><td>1,113,691</td><td>16,954,784</td><td>88,496</td><td>150756707</td></tr><tr><td>79</td><td>Mustafa KG</td><td>263,964</td><td>1,666,919</td><td>537,955</td><td>16,667,884</td><td>1,050,576</td><td>8387407</td></tr><tr><td>80</td><td>AREA00</td><td>132,682</td><td>474,725</td><td>910,291</td><td>16,160,672</td><td>311,534</td><td>88024985</td></tr><tr><td>81</td><td>さらにゃん</td><td>482,861</td><td>650,224</td><td>820,292</td><td>16,038,361</td><td>459,185</td><td>60460968</td></tr><tr><td>82</td><td>わんこ先生Sub1</td><td>444,279</td><td>516,465</td><td>832,290</td><td>15,510,954</td><td>363,394</td><td>76391222</td></tr><tr><td>83</td><td>あげだこ</td><td>502,053</td><td>527,895</td><td>774,199</td><td>14,754,513</td><td>381,610</td><td>149526784</td></tr><tr><td>84</td><td>ᴾʸRanřaň</td><td>922,794</td><td>730,246</td><td>673,326</td><td>14,673,914</td><td>445,226</td><td>104495800</td></tr><tr><td>85</td><td>Haruki 77</td><td>861,151</td><td>797,533</td><td>614,094</td><td>14,060,226</td><td>535,059</td><td>88166606</td></tr><tr><td>86</td><td>芋や金次郎</td><td>482,684</td><td>455,787</td><td>738,929</td><td>13,845,554</td><td>324,398</td><td>118986461</td></tr><tr><td>87</td><td>アヒルヒーロー</td><td>250,310</td><td>242,613</td><td>822,240</td><td>13,796,975</td><td>289,415</td><td>89546114</td></tr><tr><td>88</td><td>ねねsub</td><td>204,428</td><td>516,599</td><td>726,058</td><td>13,678,293</td><td>366,831</td><td>50159798</td></tr><tr><td>89</td><td>NちゃII2ー</td><td>564,642</td><td>646,662</td><td>641,990</td><td>13,427,802</td><td>397,781</td><td>64351820</td></tr><tr><td>90</td><td>Hopper Jr</td><td>413,520</td><td>432,497</td><td>681,975</td><td>12,805,630</td><td>323,469</td><td>75447843</td></tr><tr><td>91</td><td>ChosHopper sub</td><td>164,943</td><td>514,244</td><td>641,185</td><td>12,353,938</td><td>313,093</td><td>100806581</td></tr><tr><td>92</td><td>Asami3</td><td>326,983</td><td>268,438</td><td>674,918</td><td>11,792,943</td><td>278,488</td><td>136660523</td></tr><tr><td>93</td><td>Sudako</td><td>281,318</td><td>554,983</td><td>578,683</td><td>11,736,478</td><td>356,192</td><td>106080011</td></tr><tr><td>94</td><td>アオクマサブ</td><td>180,994</td><td>303,839</td><td>664,374</td><td>11,665,799</td><td>282,657</td><td>67431232</td></tr><tr><td>95</td><td>kinӓЯiѽ</td><td>240,454</td><td>333,542</td><td>616,195</td><td>11,151,089</td><td>241,035</td><td>79730295</td></tr><tr><td>96</td><td>Flämän牧場</td><td>146,279</td><td>654,576</td><td>482,410</td><td>10,655,309</td><td>355,556</td><td>108153377</td></tr><tr><td>97</td><td>Flämänめん</td><td>104,278</td><td>387,918</td><td>561,336</td><td>10,463,908</td><td>239,344</td><td>164921435</td></tr><tr><td>98</td><td>Flämänまん</td><td>84,117</td><td>322,743</td><td>580,731</td><td>10,408,797</td><td>199,093</td><td>159109763</td></tr><tr><td>99</td><td>レガシー忍者</td><td>332,752</td><td>724,261</td><td>417,241</td><td>10,212,672</td><td>398,119</td><td>65051393</td></tr><tr><td>100</td><td>じん太2</td><td>343,123</td><td>407,947</td><td>498,893</td><td>9,866,253</td><td>276,008</td><td>91688459</td></tr><tr><td>101</td><td>ᴰˢ zaza</td><td>353,981</td><td>313,035</td><td>508,477</td><td>9,546,311</td><td>249,404</td><td>183484795</td></tr><tr><td>102</td><td>NちゃI1ー</td><td>364,300</td><td>382,339</td><td>468,164</td><td>9,298,455</td><td>258,276</td><td>58435296</td></tr><tr><td>103</td><td>Hiyoko</td><td>263,983</td><td>206,501</td><td>523,598</td><td>9,150,458</td><td>206,010</td><td>64712072</td></tr><tr><td>104</td><td>にゃんこ先生sub7</td><td>230,916</td><td>428,061</td><td>447,372</td><td>9,081,801</td><td>303,491</td><td>74293127</td></tr><tr><td>105</td><td>Pen太</td><td>149,292</td><td>190,162</td><td>512,513</td><td>8,787,797</td><td>158,423</td><td>91783488</td></tr><tr><td>106</td><td>Hopperchan</td><td>304,239</td><td>309,132</td><td>433,933</td><td>8,358,894</td><td>222,445</td><td>57248791</td></tr><tr><td>107</td><td>NちゃII3ー</td><td>400,842</td><td>425,974</td><td>351,270</td><td>7,799,762</td><td>279,675</td><td>53955947</td></tr><tr><td>108</td><td>piyopiyo sabu</td><td>226,567</td><td>300,542</td><td>395,415</td><td>7,660,502</td><td>202,093</td><td>131529916</td></tr><tr><td>109</td><td>アオクマサブ2</td><td>47,016</td><td>154,274</td><td>443,766</td><td>7,474,876</td><td>118,163</td><td>88672995</td></tr><tr><td>110</td><td>にゃんこ先生sub2</td><td>82,966</td><td>176,558</td><td>408,275</td><td>7,089,881</td><td>153,830</td><td>83558852</td></tr><tr><td>111</td><td>Invictus Farmer</td><td>128,331</td><td>133,712</td><td>419,516</td><td>7,089,631</td><td>119,444</td><td>176775566</td></tr><tr><td>112</td><td>kinӓЯi</td><td>264,935</td><td>161,473</td><td>380,817</td><td>6,784,555</td><td>164,254</td><td>65918526</td></tr><tr><td>113</td><td>iLTW2</td><td>18,772</td><td>67,782</td><td>422,609</td><td>6,696,817</td><td>82,449</td><td>60162291</td></tr><tr><td>114</td><td>kinaꜰ</td><td>211,044</td><td>249,467</td><td>304,938</td><td>6,032,449</td><td>150,463</td><td>81991366</td></tr><tr><td>115</td><td>nene lucky</td><td>56,319</td><td>113,041</td><td>352,108</td><td>5,903,144</td><td>89,023</td><td>95188233</td></tr><tr><td>116</td><td>GodLuvsÜ mini1</td><td>340,496</td><td>355,384</td><td>237,373</td><td>5,678,011</td><td>207,831</td><td>132348105</td></tr><tr><td>117</td><td>KKさぶKK</td><td>69,892</td><td>187,237</td><td>251,234</td><td>4,774,587</td><td>110,856</td><td>82265010</td></tr><tr><td>118</td><td>にゃんこ先生sub1</td><td>179,774</td><td>158,877</td><td>243,348</td><td>4,624,379</td><td>132,887</td><td>82389051</td></tr><tr><td>119</td><td>ᴶᴺ オビ・ワン</td><td>119,458</td><td>221,282</td><td>167,023</td><td>3,731,213</td><td>325,614</td><td>65915701</td></tr><tr><td>120</td><td>エリアS88</td><td>195,964</td><td>245,319</td><td>146,991</td><td>3,627,424</td><td>143,316</td><td>100398654</td></tr><tr><td>121</td><td>ゾンビーJK2</td><td>184,398</td><td>158,590</td><td>149,877</td><td>3,225,503</td><td>118,826</td><td>70591833</td></tr><tr><td>122</td><td>chipa竜姫</td><td>61,958</td><td>93,461</td><td>158,068</td><td>2,900,283</td><td>66,398</td><td>69987124</td></tr><tr><td>123</td><td>PANKO 3号</td><td>70,484</td><td>130,555</td><td>136,986</td><td>2,778,049</td><td>75,158</td><td>175755953</td></tr><tr><td>124</td><td>雪だるマルマル</td><td>247,508</td><td>137,952</td><td>117,430</td><td>2,698,718</td><td>100,526</td><td>105172511</td></tr><tr><td>125</td><td>天くんlaundry</td><td>19,667</td><td>364,514</td><td>53,085</td><td>2,638,512</td><td>131,942</td><td>74300733</td></tr><tr><td>126</td><td>Pen太3</td><td>50,514</td><td>39,285</td><td>102,362</td><td>1,782,369</td><td>46,279</td><td>134357090</td></tr><tr><td>127</td><td>ᴶᴺ クワイ・ガン</td><td>6,658</td><td>25,810</td><td>98,451</td><td>1,612,473</td><td>30,146</td><td>157902293</td></tr><tr><td>128</td><td>hoppermini</td><td>53,608</td><td>91,679</td><td>64,892</td><td>1,485,383</td><td>58,941</td><td>50620474</td></tr><tr><td>129</td><td>れがサムライ</td><td>22,291</td><td>55,162</td><td>50,940</td><td>1,062,201</td><td>38,376</td><td>88677284</td></tr><tr><td>130</td><td>笑福亭サブ2</td><td>0</td><td>3,502</td><td>65,403</td><td>998,555</td><td>24,641</td><td>86450290</td></tr><tr><td>131</td><td>Bank of AREA</td><td>62,199</td><td>35,009</td><td>48,301</td><td>961,759</td><td>36,834</td><td>109949220</td></tr><tr><td>132</td><td>ノーネイム</td><td>100,421</td><td>9,378</td><td>53,243</td><td>945,956</td><td>25,383</td><td>60466525</td></tr><tr><td>133</td><td>ちびちぱ</td><td>0</td><td>0</td><td>60,600</td><td>909,000</td><td>0</td><td>190192329</td></tr><tr><td>134</td><td>笑福亭サブ</td><td>51,040</td><td>61,088</td><td>29,968</td><td>806,000</td><td>41,001</td><td>47954953</td></tr><tr><td>135</td><td>Pen太2</td><td>4,257</td><td>13,005</td><td>31,671</td><td>544,347</td><td>16,086</td><td>102796476</td></tr><tr><td>136</td><td>NちゃI2ー</td><td>15,805</td><td>11,121</td><td>26,191</td><td>464,275</td><td>24,275</td><td>74494131</td></tr><tr><td>137</td><td>PANKO 4号</td><td>33,515</td><td>41,818</td><td>14,163</td><td>455,050</td><td>24,596</td><td>209865862</td></tr><tr><td>138</td><td>ᴮᴬᴰ Pazz</td><td>7,254</td><td>5,182</td><td>16,288</td><td>277,484</td><td>5,041</td><td>74211038</td></tr><tr><td>139</td><td>Muhammad KG 亗</td><td>10,307</td><td>6,195</td><td>11,881</td><td>219,497</td><td>11,061</td><td>108532959</td></tr><tr><td>140</td><td>DBSブルック</td><td>1,257</td><td>14,426</td><td>0</td><td>73,387</td><td>0</td><td>61820059</td></tr><tr><td>141</td><td>にゃんたそん KGODJ</td><td>3,723</td><td>7,618</td><td>0</td><td>41,813</td><td>0</td><td>63485809</td></tr><tr><td>142</td><td>コロッケなり</td><td>25,375</td><td>2,029</td><td>0</td><td>35,520</td><td>0</td><td>105751804</td></tr><tr><td>143</td><td>LEGACYWORLD</td><td>4,456</td><td>2,163</td><td>0</td><td>15,271</td><td>0</td><td>139391105</td></tr><tr><td>144</td><td>Fege</td><td>0</td><td>0</td><td>806</td><td>12,090</td><td>0</td><td>63056043</td></tr><tr><td>145</td><td>亗ぽてゴン亗</td><td>8,254</td><td>0</td><td>0</td><td>8,254</td><td>6,942</td><td>141044677</td></tr><tr><td>146</td><td>PANKO 5号</td><td>919</td><td>1,403</td><td>0</td><td>7,934</td><td>5,829</td><td>209865282</td></tr><tr><td>147</td><td>小ロスケナリ</td><td>7,871</td><td>0</td><td>0</td><td>7,871</td><td>0</td><td>68178360</td></tr><tr><td>148</td><td>ᵖʸᵖᵈすだこ</td><td>1,924</td><td>16</td><td>0</td><td>2,004</td><td>2,839</td><td>157204087</td></tr><tr><td>149</td><td>ᴶᴺすだこ</td><td>413</td><td>6</td><td>0</td><td>443</td><td>0</td><td>157867399</td></tr><tr><td>150</td><td>ᴶᴺ アナキン</td><td>179</td><td>45</td><td>0</td><td>404</td><td>437</td><td>158833600</td></tr><tr><td>151</td><td>AREA11</td><td>294</td><td>0</td><td>0</td><td>294</td><td>0</td><td>163680569</td></tr><tr><td>152</td><td>エリア1</td><td>12</td><td>29</td><td>0</td><td>157</td><td>291</td><td>124368590</td></tr><tr><td>153</td><td>AREAサブ</td><td>0</td><td>16</td><td>0</td><td>80</td><td>0</td><td>142009769</td></tr><tr><td>154</td><td>亗potechi亗</td><td>0</td><td>14</td><td>0</td><td>70</td><td>137</td><td>135813174</td></tr><tr><td>155</td><td>亗ぽてさら亗</td><td>0</td><td>8</td><td>0</td><td>40</td><td>0</td><td>140945956</td></tr><tr><td>156</td><td>みすたーX</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>129769734</td></tr><tr><td>157</td><td>ᴰᴮˢ心壱</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>60552394</td></tr><tr><td>158</td><td>エリアサブ2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>142009829</td></tr><tr><td>159</td><td>kinäri</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>61970222</td></tr><tr><td>160</td><td>バフ要員</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>62462665</td></tr><tr><td>161</td><td>竜嫁ᴶᴺ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>69496683</td></tr><tr><td>162</td><td>nik111</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139769984</td></tr><tr><td>163</td><td>妃</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>88877163</td></tr><tr><td>164</td><td>ᴶᴺ ハン・ソロ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>98995668</td></tr><tr><td>165</td><td>ᴶᴺ レイア姫</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>148791055</td></tr><tr><td>166</td><td>greGOfarM</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>190378024</td></tr><tr><td>167</td><td>どちらのお菊</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>49192291</td></tr><tr><td>168</td><td>Muhammadkg</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>123114599</td></tr><tr><td>169</td><td>わんこ先生Sub6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>173737355</td></tr><tr><td>170</td><td>Muhammad KG ツ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>111668730</td></tr><tr><td>171</td><td>もすたーKJ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>167312170</td></tr><tr><td>172</td><td>わんこ先生Sub5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>173737504</td></tr><tr><td>173</td><td>GREgoFARM</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>190377038</td></tr><tr><td>174</td><td>あおクマ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>157207153</td></tr><tr><td>175</td><td>Pen太6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>171018745</td></tr><tr><td>176</td><td>iLTW4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>162725651</td></tr><tr><td>177</td><td>Flämän ザコ2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>191030730</td></tr><tr><td>178</td><td>葬送のちぱーれん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>175182113</td></tr><tr><td>179</td><td>Walther</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>190719099</td></tr><tr><td>180</td><td>viendeptrai</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>121288577</td></tr><tr><td>181</td><td>わんこ先生Sub2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>44210842</td></tr><tr><td>182</td><td>チームメンヘラ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>69432019</td></tr><tr><td>183</td><td>Pen太5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>167927469</td></tr><tr><td>184</td><td>みせすkj</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>147941007</td></tr><tr><td>185</td><td>ᴰᴮˢ puppet</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>73429882</td></tr><tr><td>186</td><td>LingLingj</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>157271498</td></tr><tr><td>187</td><td>Linglingpt</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>157284062</td></tr><tr><td>188</td><td>Gubernur138884487</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>138884487</td></tr><tr><td>189</td><td>SL KING RAWANA1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>165827308</td></tr><tr><td>190</td><td>ᴰᴮˢZun</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>72862962</td></tr><tr><td>191</td><td>ᴶᴺ ヨーダ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>85628951</td></tr><tr><td>192</td><td>アオくまᵂᴷ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>103722997</td></tr><tr><td>193</td><td>Hopperkun</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>101047878</td></tr><tr><td>194</td><td>badro farm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>121801065</td></tr><tr><td>195</td><td>白ひげお好きでござる</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>106755451</td></tr><tr><td>196</td><td>白ひげの友GARP</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>106592291</td></tr><tr><td>197</td><td>iLTW3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>101059145</td></tr><tr><td>198</td><td>㋛ Pazzito</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>66743435</td></tr><tr><td>199</td><td>napolll</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>143313976</td></tr><tr><td>200</td><td>Gsub3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>170036216</td></tr><tr><td>201</td><td>ᴶᴺ ダースベイダ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>88992292</td></tr><tr><td>202</td><td>GodLuvsÜ mini2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>133924371</td></tr><tr><td>203</td><td>亗ぽてにゃん亗</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>153796208</td></tr><tr><td>204</td><td>ᴶᴺ ウィンドウ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>151181639</td></tr><tr><td>205</td><td>乂 3zra2il 乂</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>60028233</td></tr><tr><td>206</td><td>Sakapus</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139765309</td></tr><tr><td>207</td><td>nullfarm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>178890132</td></tr><tr><td>208</td><td>Muhammad 亗</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>109576124</td></tr><tr><td>209</td><td>ウシ男</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>85057559</td></tr><tr><td>210</td><td>Lost mage</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139704095</td></tr><tr><td>211</td><td>Pen太4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>123472294</td></tr><tr><td>212</td><td>ᴵᶠ Zunさん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>169265755</td></tr><tr><td>213</td><td>れがにゃんにゃん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>69276943</td></tr><tr><td>214</td><td>pickled octopus</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>103745602</td></tr><tr><td>215</td><td>Irumi</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>129880807</td></tr><tr><td>216</td><td>Bäby K</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>96220322</td></tr><tr><td>217</td><td>ねねの農家</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>182840044</td></tr><tr><td>218</td><td>LingLingo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139865284</td></tr><tr><td>219</td><td>イケおじだった白ひげ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>63071295</td></tr><tr><td>220</td><td>ねねのワンコ農家</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>182849021</td></tr><tr><td>221</td><td>ブッティ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>114769700</td></tr><tr><td>222</td><td>白ひげの別荘地</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>54317951</td></tr><tr><td>223</td><td>Pensolin</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139761732</td></tr><tr><td>224</td><td>BuZZer Farm 1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>149365443</td></tr><tr><td>225</td><td>FlämänEvery</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>156786116</td></tr><tr><td>226</td><td>ᵏ ˣすだこ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>164191288</td></tr><tr><td>227</td><td>ᴹᴳPazz</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>96044613</td></tr><tr><td>228</td><td>CAZA PINCHILAS</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139740913</td></tr><tr><td>229</td><td>FlämänSub</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>177551544</td></tr><tr><td>230</td><td>みすたーYMD</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>73777293</td></tr><tr><td>231</td><td>GodLuvsÜ mini3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139208559</td></tr><tr><td>232</td><td>武将レガ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>73431982</td></tr><tr><td>233</td><td>天才</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>105021064</td></tr><tr><td>234</td><td>ちびちぱ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>158708940</td></tr><tr><td>235</td><td>ねねのお友達</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>101526991</td></tr><tr><td>236</td><td>ブティックタケノコ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>166637407</td></tr><tr><td>237</td><td>nullです</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>191387154</td></tr><tr><td>238</td><td>GodLuvsÜ mini4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>148172160</td></tr><tr><td>239</td><td>Muhammad ツ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>108836151</td></tr><tr><td>240</td><td>ᴹᶠすだこ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>164195055</td></tr><tr><td>241</td><td>にゃんこ先生sub5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>146198499</td></tr><tr><td>242</td><td>ผู้ว่าการ139749026</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139749026</td></tr><tr><td>243</td><td>engineer</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139333674</td></tr><tr><td>244</td><td>にゃんこ先生sub3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>162322429</td></tr><tr><td>245</td><td>Pazz UK</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>96696068</td></tr><tr><td>246</td><td>にゃんこ先生sub4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>162318270</td></tr><tr><td>247</td><td>hopperbaby</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>89680950</td></tr><tr><td>248</td><td>加持さん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>61944368</td></tr><tr><td>249</td><td>みすたーK</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>123167963</td></tr><tr><td>250</td><td>Flämänザコ1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>191030385</td></tr><tr><td>251</td><td>JS7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139696534</td></tr><tr><td>252</td><td>ピリ辛 玉こんにゃく</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>137687067</td></tr><tr><td>253</td><td>農民りむる</td><td>0</td><td>0</td><td>0</td><td>0</td><td>48</td><td>122486831</td></tr><tr><td>254</td><td>IGREJA ll</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>145306152</td></tr><tr><td>255</td><td>めすたーKJ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>136033214</td></tr><tr><td>256</td><td>みすたーJ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>128699175</td></tr><tr><td>257</td><td>iLTW5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>120987416</td></tr><tr><td>258</td><td>PetitHopper</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>146177344</td></tr><tr><td>259</td><td>ロロロロックリー</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>122798541</td></tr><tr><td>260</td><td>iLTW6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>95932187</td></tr><tr><td>261</td><td>Badro6farm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>177977247</td></tr><tr><td>262</td><td>食パンれが</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>73243469</td></tr><tr><td>263</td><td>なやまあかわ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>141050506</td></tr><tr><td>264</td><td>Nâmđz</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139775203</td></tr><tr><td>265</td><td>ฮนุ่ม</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139750258</td></tr><tr><td>266</td><td>そちらのお菊</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>113034639</td></tr><tr><td>267</td><td>Hoppersan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>123493074</td></tr><tr><td>268</td><td>りむる農園</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>85297880</td></tr><tr><td>269</td><td>stoonboy</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>139755519</td></tr><tr><td>270</td><td>iLTW9</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>105590754</td></tr><tr><td>271</td><td>iLTW7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>175185603</td></tr><tr><td>272</td><td>Badrofarm7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>161431199</td></tr>
+          <tr><td>1</td><td>AREA88</td><td>14,534,396</td><td>102,768,151</td><td>1,739,671</td><td>2,361,531</td><td>572,181,698</td><td>31,158,566</td></tr><tr><td>2</td><td>BADRO月光</td><td>8,190,600</td><td>65,797,313</td><td>1,774,424</td><td>4,743,611</td><td>399,370,608</td><td>20,626,719</td></tr><tr><td>3</td><td>GREGO</td><td>6,270,273</td><td>61,779,946</td><td>1,233,886</td><td>3,451,593</td><td>359,565,240</td><td>18,942,759</td></tr><tr><td>4</td><td>DBsわんこ先生</td><td>14,764,636</td><td>58,818,843</td><td>1,807,726</td><td>885,533</td><td>342,616,238</td><td>19,364,703</td></tr><tr><td>5</td><td>iLTWˣ</td><td>4,386,392</td><td>58,578,772</td><td>961,328</td><td>422,609</td><td>314,869,740</td><td>17,422,017</td></tr><tr><td>6</td><td>Flämän</td><td>5,690,940</td><td>39,043,250</td><td>1,026,228</td><td>5,998,964</td><td>261,292,840</td><td>12,125,214</td></tr><tr><td>7</td><td>ᴰᴮˢmattari</td><td>5,170,760</td><td>34,751,647</td><td>1,360,268</td><td>5,431,384</td><td>240,068,395</td><td>10,728,602</td></tr><tr><td>8</td><td>Edward  NewGate</td><td>6,025,822</td><td>37,852,788</td><td>881,509</td><td>0</td><td>208,512,397</td><td>13,426,486</td></tr><tr><td>9</td><td>すだこ</td><td>6,163,207</td><td>25,779,970</td><td>911,578</td><td>6,454,551</td><td>197,145,860</td><td>8,490,054</td></tr><tr><td>10</td><td>JustHopper</td><td>5,921,501</td><td>29,421,947</td><td>960,822</td><td>3,795,505</td><td>195,909,854</td><td>9,532,518</td></tr><tr><td>11</td><td>HENタイ紳士銀</td><td>9,767,416</td><td>29,625,230</td><td>2,449,324</td><td>0</td><td>194,633,426</td><td>10,728,337</td></tr><tr><td>12</td><td>お菊のさら</td><td>5,352,545</td><td>31,456,515</td><td>1,117,841</td><td>1,721,823</td><td>192,316,408</td><td>11,979,002</td></tr><tr><td>13</td><td>ひよこひーろー</td><td>3,040,293</td><td>28,646,991</td><td>1,688,501</td><td>1,345,838</td><td>181,696,548</td><td>9,789,303</td></tr><tr><td>14</td><td>ーNちゃー</td><td>3,700,632</td><td>26,225,110</td><td>877,064</td><td>2,666,136</td><td>167,978,162</td><td>8,917,513</td></tr><tr><td>15</td><td>black foot S</td><td>4,503,657</td><td>27,047,358</td><td>1,573,138</td><td>0</td><td>163,337,517</td><td>9,047,678</td></tr><tr><td>16</td><td>Mụ Q Dùng</td><td>2,362,673</td><td>29,004,067</td><td>809,671</td><td>0</td><td>159,528,073</td><td>8,438,965</td></tr><tr><td>17</td><td>猫猫乄りむるん</td><td>4,071,612</td><td>25,515,850</td><td>1,690,643</td><td>0</td><td>157,010,507</td><td>8,596,893</td></tr><tr><td>18</td><td>PANKO ᴘᴀ</td><td>4,254,462</td><td>17,193,240</td><td>3,335,196</td><td>1,620,003</td><td>152,398,624</td><td>6,990,767</td></tr><tr><td>19</td><td>ظzaza</td><td>4,301,471</td><td>23,369,117</td><td>1,769,296</td><td>508,477</td><td>151,500,074</td><td>8,415,341</td></tr><tr><td>20</td><td>くそPANDA</td><td>4,456,948</td><td>22,005,674</td><td>2,306,858</td><td>0</td><td>149,088,188</td><td>8,000,689</td></tr><tr><td>21</td><td>ᴰᴮˢZunさん</td><td>5,299,716</td><td>24,627,464</td><td>1,369,422</td><td>0</td><td>148,978,366</td><td>8,414,161</td></tr><tr><td>22</td><td>ᴰᴮsみすたーKJ</td><td>2,473,832</td><td>24,212,725</td><td>1,561,372</td><td>149,877</td><td>148,082,114</td><td>8,261,597</td></tr><tr><td>23</td><td>Invictus1888</td><td>5,074,221</td><td>24,499,454</td><td>849,375</td><td>419,516</td><td>143,458,486</td><td>7,637,407</td></tr><tr><td>24</td><td>ᴰᴮᶳﾗﾝﾗﾝ</td><td>3,649,913</td><td>17,434,486</td><td>2,047,782</td><td>2,313,124</td><td>138,887,503</td><td>6,670,374</td></tr><tr><td>25</td><td>DBsにゃんこ先生</td><td>3,210,172</td><td>20,382,630</td><td>917,152</td><td>1,967,139</td><td>133,634,144</td><td>7,583,758</td></tr><tr><td>26</td><td>KK親父KK</td><td>2,579,772</td><td>17,313,684</td><td>2,355,335</td><td>251,234</td><td>126,362,472</td><td>6,596,128</td></tr><tr><td>27</td><td>B u Z Z e r</td><td>7,000,050</td><td>15,718,822</td><td>2,140,799</td><td>0</td><td>117,706,145</td><td>7,150,377</td></tr><tr><td>28</td><td>ᴰᴮᶳじん太</td><td>3,325,156</td><td>16,929,543</td><td>1,297,563</td><td>1,145,439</td><td>116,027,108</td><td>5,917,952</td></tr><tr><td>29</td><td>ᴾᴴGodLuvzÜ</td><td>6,028,812</td><td>12,822,337</td><td>2,810,142</td><td>237,373</td><td>114,072,924</td><td>6,090,396</td></tr><tr><td>30</td><td>ᴷˣLEGACY</td><td>4,552,845</td><td>11,202,732</td><td>2,334,256</td><td>468,181</td><td>99,091,702</td><td>4,832,510</td></tr><tr><td>31</td><td>亗pote sara亗</td><td>2,950,836</td><td>15,843,033</td><td>711,513</td><td>738,929</td><td>98,380,664</td><td>5,938,955</td></tr><tr><td>32</td><td>AhmadSn</td><td>1,773,902</td><td>14,198,656</td><td>479,029</td><td>1,601,142</td><td>91,961,182</td><td>3,811,524</td></tr><tr><td>33</td><td>ᴰᴮˢアオクマ</td><td>1,784,176</td><td>11,924,361</td><td>882,860</td><td>2,170,036</td><td>90,924,151</td><td>4,730,114</td></tr><tr><td>34</td><td>ᴰᴮˢ ジェダイ</td><td>2,353,478</td><td>11,553,230</td><td>1,316,201</td><td>265,474</td><td>81,853,698</td><td>4,805,838</td></tr><tr><td>35</td><td>Haruki 6</td><td>5,432,977</td><td>7,589,466</td><td>1,353,044</td><td>614,094</td><td>68,281,672</td><td>3,421,781</td></tr><tr><td>36</td><td>乂 Senator 乂</td><td>1,272,986</td><td>8,502,198</td><td>1,464,402</td><td>11,881</td><td>65,839,114</td><td>2,781,152</td></tr><tr><td>37</td><td>DBSねね</td><td>1,771,391</td><td>8,023,637</td><td>957,718</td><td>1,078,166</td><td>64,341,591</td><td>3,198,384</td></tr><tr><td>38</td><td>あさみᴘᴀ</td><td>1,571,991</td><td>5,147,139</td><td>471,033</td><td>3,259,817</td><td>58,821,808</td><td>2,205,504</td></tr><tr><td>39</td><td>乂 Pazzito 乂</td><td>1,384,072</td><td>8,206,836</td><td>878,722</td><td>16,288</td><td>55,721,242</td><td>3,144,198</td></tr><tr><td>40</td><td>PAMU pi</td><td>1,345,192</td><td>3,373,382</td><td>2,358,637</td><td>0</td><td>53,591,657</td><td>2,120,836</td></tr><tr><td>41</td><td>魁ゆきJapan魁</td><td>2,927,487</td><td>5,534,850</td><td>1,362,298</td><td>117,430</td><td>51,916,932</td><td>2,632,583</td></tr><tr><td>42</td><td>ᴰᴮˢ khang</td><td>2,550,765</td><td>3,292,179</td><td>1,390,591</td><td>1,496,657</td><td>51,095,452</td><td>2,173,761</td></tr><tr><td>43</td><td>ᴳᴰ kinari</td><td>998,219</td><td>4,491,520</td><td>1,044,917</td><td>1,301,950</td><td>48,894,199</td><td>1,796,839</td></tr><tr><td>44</td><td>ヒデ1</td><td>171,341</td><td>211,677</td><td>2,584,899</td><td>0</td><td>40,003,211</td><td>270,546</td></tr><tr><td>45</td><td>しんなり</td><td>1,701,748</td><td>5,066,683</td><td>832,435</td><td>0</td><td>39,521,688</td><td>2,341,288</td></tr><tr><td>46</td><td>ChosHopper</td><td>913,316</td><td>1,773,958</td><td>1,973,520</td><td>0</td><td>39,385,906</td><td>1,214,394</td></tr><tr><td>47</td><td>Flämänboy</td><td>473,702</td><td>1,595,018</td><td>2,040,960</td><td>0</td><td>39,063,192</td><td>941,645</td></tr><tr><td>48</td><td>ᴷˣchipaちぱ姫</td><td>601,978</td><td>2,381,914</td><td>1,465,035</td><td>158,068</td><td>35,672,583</td><td>1,290,962</td></tr><tr><td>49</td><td>まったり覆面マン</td><td>554,864</td><td>895,766</td><td>1,991,530</td><td>0</td><td>34,906,644</td><td>674,812</td></tr><tr><td>50</td><td>PANKO2号ᴘᴀ</td><td>1,920,498</td><td>2,172,516</td><td>1,468,854</td><td>0</td><td>34,815,888</td><td>1,349,991</td></tr><tr><td>51</td><td>まったり貯金箱</td><td>893,358</td><td>1,158,089</td><td>1,868,139</td><td>0</td><td>34,705,888</td><td>791,546</td></tr><tr><td>52</td><td>ᴰᴮᶳゆたそん</td><td>1,715,464</td><td>4,490,761</td><td>677,258</td><td>0</td><td>34,328,139</td><td>2,098,602</td></tr><tr><td>53</td><td>Gsub2</td><td>300,636</td><td>435,866</td><td>2,112,416</td><td>0</td><td>34,166,206</td><td>401,083</td></tr><tr><td>54</td><td>01 Jin</td><td>818,123</td><td>1,391,779</td><td>1,750,326</td><td>0</td><td>34,031,908</td><td>1,050,639</td></tr><tr><td>55</td><td>ᴰᴮˢnull</td><td>969,351</td><td>3,534,634</td><td>978,101</td><td>0</td><td>33,314,036</td><td>1,522,530</td></tr><tr><td>56</td><td>LーELF</td><td>964,446</td><td>3,774,038</td><td>845,754</td><td>0</td><td>32,520,946</td><td>1,595,690</td></tr><tr><td>57</td><td>まだこ</td><td>387,481</td><td>1,143,776</td><td>1,728,660</td><td>0</td><td>32,036,261</td><td>751,756</td></tr><tr><td>58</td><td>ᴰᴮˢRanran</td><td>988,558</td><td>1,451,782</td><td>1,579,198</td><td>0</td><td>31,935,438</td><td>861,774</td></tr><tr><td>59</td><td>capitangoon</td><td>1,390,419</td><td>3,438,444</td><td>833,856</td><td>0</td><td>31,090,479</td><td>1,791,896</td></tr><tr><td>60</td><td>Gsub1</td><td>1,251,325</td><td>1,305,984</td><td>1,339,177</td><td>0</td><td>27,868,900</td><td>857,513</td></tr><tr><td>61</td><td>khang 62</td><td>790,896</td><td>905,924</td><td>1,496,657</td><td>0</td><td>27,770,371</td><td>137,663</td></tr><tr><td>62</td><td>NちゃII1ー</td><td>862,100</td><td>1,594,675</td><td>1,178,521</td><td>0</td><td>26,513,290</td><td>918,061</td></tr><tr><td>63</td><td>まったり農場</td><td>302,713</td><td>472,025</td><td>1,571,715</td><td>0</td><td>26,238,563</td><td>437,893</td></tr><tr><td>64</td><td>エリアS</td><td>383,967</td><td>1,361,939</td><td>1,255,948</td><td>0</td><td>26,032,882</td><td>731,376</td></tr><tr><td>65</td><td>コロスケナリ</td><td>1,080,205</td><td>1,695,685</td><td>1,091,408</td><td>0</td><td>25,929,750</td><td>983,497</td></tr><tr><td>66</td><td>FARM SIRAhmadSn</td><td>264,354</td><td>223,361</td><td>1,601,142</td><td>0</td><td>25,398,289</td><td>296,279</td></tr><tr><td>67</td><td>badro farm 2</td><td>180,109</td><td>354,221</td><td>1,520,505</td><td>0</td><td>24,758,789</td><td>283,914</td></tr><tr><td>68</td><td>small Badro</td><td>780,843</td><td>1,206,410</td><td>1,115,332</td><td>0</td><td>23,542,873</td><td>608,383</td></tr><tr><td>69</td><td>やきだこ</td><td>486,053</td><td>1,277,586</td><td>1,075,360</td><td>0</td><td>23,004,383</td><td>717,987</td></tr><tr><td>70</td><td>Flämän畑</td><td>893,558</td><td>755,547</td><td>1,218,601</td><td>0</td><td>22,950,308</td><td>531,192</td></tr><tr><td>71</td><td>いいだこ</td><td>374,790</td><td>629,828</td><td>1,259,834</td><td>0</td><td>22,421,440</td><td>482,468</td></tr><tr><td>72</td><td>Flämän水産</td><td>311,009</td><td>932,223</td><td>1,114,926</td><td>0</td><td>21,696,014</td><td>563,000</td></tr><tr><td>73</td><td>アオクマAoo</td><td>309,922</td><td>739,825</td><td>1,061,896</td><td>0</td><td>19,937,487</td><td>477,424</td></tr><tr><td>74</td><td>みずだこ</td><td>315,879</td><td>635,330</td><td>1,037,815</td><td>0</td><td>19,059,754</td><td>423,138</td></tr><tr><td>75</td><td>BADRO fm</td><td>324,082</td><td>644,252</td><td>994,083</td><td>0</td><td>18,456,587</td><td>361,700</td></tr><tr><td>76</td><td>ʏᴅにゃんこ先生</td><td>556,531</td><td>919,932</td><td>868,144</td><td>0</td><td>18,178,351</td><td>528,914</td></tr><tr><td>77</td><td>さらにゃんᴶᴺ</td><td>552,284</td><td>635,304</td><td>901,531</td><td>0</td><td>17,251,769</td><td>426,047</td></tr><tr><td>78</td><td>badro farm4</td><td>99,859</td><td>29,912</td><td>1,113,691</td><td>0</td><td>16,954,784</td><td>88,496</td></tr><tr><td>79</td><td>Mustafa KG</td><td>263,964</td><td>1,666,919</td><td>537,955</td><td>0</td><td>16,667,884</td><td>1,050,576</td></tr><tr><td>80</td><td>AREA00</td><td>132,682</td><td>474,725</td><td>910,291</td><td>0</td><td>16,160,672</td><td>311,534</td></tr><tr><td>81</td><td>さらにゃん</td><td>482,861</td><td>650,224</td><td>820,292</td><td>0</td><td>16,038,361</td><td>459,185</td></tr><tr><td>82</td><td>わんこ先生Sub1</td><td>444,279</td><td>516,465</td><td>832,290</td><td>0</td><td>15,510,954</td><td>363,394</td></tr><tr><td>83</td><td>あげだこ</td><td>502,053</td><td>527,895</td><td>774,199</td><td>0</td><td>14,754,513</td><td>381,610</td></tr><tr><td>84</td><td>ᴾʸRanřaň</td><td>922,794</td><td>730,246</td><td>673,326</td><td>0</td><td>14,673,914</td><td>445,226</td></tr><tr><td>85</td><td>Haruki 77</td><td>861,151</td><td>797,533</td><td>614,094</td><td>0</td><td>14,060,226</td><td>535,059</td></tr><tr><td>86</td><td>芋や金次郎</td><td>482,684</td><td>455,787</td><td>738,929</td><td>0</td><td>13,845,554</td><td>324,398</td></tr><tr><td>87</td><td>アヒルヒーロー</td><td>250,310</td><td>242,613</td><td>822,240</td><td>0</td><td>13,796,975</td><td>289,415</td></tr><tr><td>88</td><td>ねねsub</td><td>204,428</td><td>516,599</td><td>726,058</td><td>0</td><td>13,678,293</td><td>366,831</td></tr><tr><td>89</td><td>NちゃII2ー</td><td>564,642</td><td>646,662</td><td>641,990</td><td>0</td><td>13,427,802</td><td>397,781</td></tr><tr><td>90</td><td>Hopper Jr</td><td>413,520</td><td>432,497</td><td>681,975</td><td>0</td><td>12,805,630</td><td>323,469</td></tr><tr><td>91</td><td>ChosHopper sub</td><td>164,943</td><td>514,244</td><td>641,185</td><td>0</td><td>12,353,938</td><td>313,093</td></tr><tr><td>92</td><td>Asami3</td><td>326,983</td><td>268,438</td><td>674,918</td><td>0</td><td>11,792,943</td><td>278,488</td></tr><tr><td>93</td><td>Sudako</td><td>281,318</td><td>554,983</td><td>578,683</td><td>0</td><td>11,736,478</td><td>356,192</td></tr><tr><td>94</td><td>アオクマサブ</td><td>180,994</td><td>303,839</td><td>664,374</td><td>0</td><td>11,665,799</td><td>282,657</td></tr><tr><td>95</td><td>kinӓЯiѽ</td><td>240,454</td><td>333,542</td><td>616,195</td><td>0</td><td>11,151,089</td><td>241,035</td></tr><tr><td>96</td><td>Flämän牧場</td><td>146,279</td><td>654,576</td><td>482,410</td><td>0</td><td>10,655,309</td><td>355,556</td></tr><tr><td>97</td><td>Flämänめん</td><td>104,278</td><td>387,918</td><td>561,336</td><td>0</td><td>10,463,908</td><td>239,344</td></tr><tr><td>98</td><td>Flämänまん</td><td>84,117</td><td>322,743</td><td>580,731</td><td>0</td><td>10,408,797</td><td>199,093</td></tr><tr><td>99</td><td>レガシー忍者</td><td>332,752</td><td>724,261</td><td>417,241</td><td>0</td><td>10,212,672</td><td>398,119</td></tr><tr><td>100</td><td>じん太2</td><td>343,123</td><td>407,947</td><td>498,893</td><td>0</td><td>9,866,253</td><td>276,008</td></tr><tr><td>101</td><td>ᴰˢ zaza</td><td>353,981</td><td>313,035</td><td>508,477</td><td>0</td><td>9,546,311</td><td>249,404</td></tr><tr><td>102</td><td>NちゃI1ー</td><td>364,300</td><td>382,339</td><td>468,164</td><td>0</td><td>9,298,455</td><td>258,276</td></tr><tr><td>103</td><td>Hiyoko</td><td>263,983</td><td>206,501</td><td>523,598</td><td>0</td><td>9,150,458</td><td>206,010</td></tr><tr><td>104</td><td>にゃんこ先生sub7</td><td>230,916</td><td>428,061</td><td>447,372</td><td>0</td><td>9,081,801</td><td>303,491</td></tr><tr><td>105</td><td>Pen太</td><td>149,292</td><td>190,162</td><td>512,513</td><td>0</td><td>8,787,797</td><td>158,423</td></tr><tr><td>106</td><td>Hopperchan</td><td>304,239</td><td>309,132</td><td>433,933</td><td>0</td><td>8,358,894</td><td>222,445</td></tr><tr><td>107</td><td>NちゃII3ー</td><td>400,842</td><td>425,974</td><td>351,270</td><td>0</td><td>7,799,762</td><td>279,675</td></tr><tr><td>108</td><td>piyopiyo sabu</td><td>226,567</td><td>300,542</td><td>395,415</td><td>0</td><td>7,660,502</td><td>202,093</td></tr><tr><td>109</td><td>アオクマサブ2</td><td>47,016</td><td>154,274</td><td>443,766</td><td>0</td><td>7,474,876</td><td>118,163</td></tr><tr><td>110</td><td>にゃんこ先生sub2</td><td>82,966</td><td>176,558</td><td>408,275</td><td>0</td><td>7,089,881</td><td>153,830</td></tr><tr><td>111</td><td>Invictus Farmer</td><td>128,331</td><td>133,712</td><td>419,516</td><td>0</td><td>7,089,631</td><td>119,444</td></tr><tr><td>112</td><td>kinӓЯi</td><td>264,935</td><td>161,473</td><td>380,817</td><td>0</td><td>6,784,555</td><td>164,254</td></tr><tr><td>113</td><td>iLTW2</td><td>18,772</td><td>67,782</td><td>422,609</td><td>0</td><td>6,696,817</td><td>82,449</td></tr><tr><td>114</td><td>kinaꜰ</td><td>211,044</td><td>249,467</td><td>304,938</td><td>0</td><td>6,032,449</td><td>150,463</td></tr><tr><td>115</td><td>nene lucky</td><td>56,319</td><td>113,041</td><td>352,108</td><td>0</td><td>5,903,144</td><td>89,023</td></tr><tr><td>116</td><td>GodLuvsÜ mini1</td><td>340,496</td><td>355,384</td><td>237,373</td><td>0</td><td>5,678,011</td><td>207,831</td></tr><tr><td>117</td><td>KKさぶKK</td><td>69,892</td><td>187,237</td><td>251,234</td><td>0</td><td>4,774,587</td><td>110,856</td></tr><tr><td>118</td><td>にゃんこ先生sub1</td><td>179,774</td><td>158,877</td><td>243,348</td><td>0</td><td>4,624,379</td><td>132,887</td></tr><tr><td>119</td><td>ᴶᴺ オビ・ワン</td><td>119,458</td><td>221,282</td><td>167,023</td><td>0</td><td>3,731,213</td><td>325,614</td></tr><tr><td>120</td><td>エリアS88</td><td>195,964</td><td>245,319</td><td>146,991</td><td>0</td><td>3,627,424</td><td>143,316</td></tr><tr><td>121</td><td>ゾンビーJK2</td><td>184,398</td><td>158,590</td><td>149,877</td><td>0</td><td>3,225,503</td><td>118,826</td></tr><tr><td>122</td><td>chipa竜姫</td><td>61,958</td><td>93,461</td><td>158,068</td><td>0</td><td>2,900,283</td><td>66,398</td></tr><tr><td>123</td><td>PANKO 3号</td><td>70,484</td><td>130,555</td><td>136,986</td><td>0</td><td>2,778,049</td><td>75,158</td></tr><tr><td>124</td><td>雪だるマルマル</td><td>247,508</td><td>137,952</td><td>117,430</td><td>0</td><td>2,698,718</td><td>100,526</td></tr><tr><td>125</td><td>天くんlaundry</td><td>19,667</td><td>364,514</td><td>53,085</td><td>0</td><td>2,638,512</td><td>131,942</td></tr><tr><td>126</td><td>Pen太3</td><td>50,514</td><td>39,285</td><td>102,362</td><td>0</td><td>1,782,369</td><td>46,279</td></tr><tr><td>127</td><td>ᴶᴺ クワイ・ガン</td><td>6,658</td><td>25,810</td><td>98,451</td><td>0</td><td>1,612,473</td><td>30,146</td></tr><tr><td>128</td><td>hoppermini</td><td>53,608</td><td>91,679</td><td>64,892</td><td>0</td><td>1,485,383</td><td>58,941</td></tr><tr><td>129</td><td>れがサムライ</td><td>22,291</td><td>55,162</td><td>50,940</td><td>0</td><td>1,062,201</td><td>38,376</td></tr><tr><td>130</td><td>笑福亭サブ2</td><td>0</td><td>3,502</td><td>65,403</td><td>0</td><td>998,555</td><td>24,641</td></tr><tr><td>131</td><td>Bank of AREA</td><td>62,199</td><td>35,009</td><td>48,301</td><td>0</td><td>961,759</td><td>36,834</td></tr><tr><td>132</td><td>ノーネイム</td><td>100,421</td><td>9,378</td><td>53,243</td><td>0</td><td>945,956</td><td>25,383</td></tr><tr><td>133</td><td>ちびちぱ</td><td>0</td><td>0</td><td>60,600</td><td>0</td><td>909,000</td><td>0</td></tr><tr><td>134</td><td>笑福亭サブ</td><td>51,040</td><td>61,088</td><td>29,968</td><td>0</td><td>806,000</td><td>41,001</td></tr><tr><td>135</td><td>Pen太2</td><td>4,257</td><td>13,005</td><td>31,671</td><td>0</td><td>544,347</td><td>16,086</td></tr><tr><td>136</td><td>NちゃI2ー</td><td>15,805</td><td>11,121</td><td>26,191</td><td>0</td><td>464,275</td><td>24,275</td></tr><tr><td>137</td><td>PANKO 4号</td><td>33,515</td><td>41,818</td><td>14,163</td><td>0</td><td>455,050</td><td>24,596</td></tr><tr><td>138</td><td>ᴮᴬᴰ Pazz</td><td>7,254</td><td>5,182</td><td>16,288</td><td>0</td><td>277,484</td><td>5,041</td></tr><tr><td>139</td><td>Muhammad KG 亗</td><td>10,307</td><td>6,195</td><td>11,881</td><td>0</td><td>219,497</td><td>11,061</td></tr><tr><td>140</td><td>DBSブルック</td><td>1,257</td><td>14,426</td><td>0</td><td>0</td><td>73,387</td><td>0</td></tr><tr><td>141</td><td>にゃんたそん KGODJ</td><td>3,723</td><td>7,618</td><td>0</td><td>0</td><td>41,813</td><td>0</td></tr><tr><td>142</td><td>コロッケなり</td><td>25,375</td><td>2,029</td><td>0</td><td>0</td><td>35,520</td><td>0</td></tr><tr><td>143</td><td>LEGACYWORLD</td><td>4,456</td><td>2,163</td><td>0</td><td>0</td><td>15,271</td><td>0</td></tr><tr><td>144</td><td>Fege</td><td>0</td><td>0</td><td>806</td><td>0</td><td>12,090</td><td>0</td></tr><tr><td>145</td><td>亗ぽてゴン亗</td><td>8,254</td><td>0</td><td>0</td><td>0</td><td>8,254</td><td>6,942</td></tr><tr><td>146</td><td>PANKO 5号</td><td>919</td><td>1,403</td><td>0</td><td>0</td><td>7,934</td><td>5,829</td></tr><tr><td>147</td><td>小ロスケナリ</td><td>7,871</td><td>0</td><td>0</td><td>0</td><td>7,871</td><td>0</td></tr><tr><td>148</td><td>ᵖʸᵖᵈすだこ</td><td>1,924</td><td>16</td><td>0</td><td>0</td><td>2,004</td><td>2,839</td></tr><tr><td>149</td><td>ᴶᴺすだこ</td><td>413</td><td>6</td><td>0</td><td>0</td><td>443</td><td>0</td></tr><tr><td>150</td><td>ᴶᴺ アナキン</td><td>179</td><td>45</td><td>0</td><td>0</td><td>404</td><td>437</td></tr><tr><td>151</td><td>AREA11</td><td>294</td><td>0</td><td>0</td><td>0</td><td>294</td><td>0</td></tr><tr><td>152</td><td>エリア1</td><td>12</td><td>29</td><td>0</td><td>0</td><td>157</td><td>291</td></tr><tr><td>153</td><td>AREAサブ</td><td>0</td><td>16</td><td>0</td><td>0</td><td>80</td><td>0</td></tr><tr><td>154</td><td>亗potechi亗</td><td>0</td><td>14</td><td>0</td><td>0</td><td>70</td><td>137</td></tr><tr><td>155</td><td>亗ぽてさら亗</td><td>0</td><td>8</td><td>0</td><td>0</td><td>40</td><td>0</td></tr><tr><td>156</td><td>チームメンヘラ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>157</td><td>ᴰᴮˢ puppet</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>158</td><td>ᴰᴮˢ心壱</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>159</td><td>kinäri</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>160</td><td>バフ要員</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>161</td><td>SL KING RAWANA1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>162</td><td>ᴶᴺ ヨーダ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>163</td><td>ᴰᴮˢZun</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>164</td><td>エリアサブ2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>165</td><td>ᴶᴺ レイア姫</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>166</td><td>妃</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>167</td><td>ᴶᴺ ハン・ソロ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>168</td><td>nik111</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>169</td><td>竜嫁ᴶᴺ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>170</td><td>㋛ Pazzito</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>171</td><td>ᴶᴺ ダースベイダ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>172</td><td>napolll</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>173</td><td>Muhammad 亗</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>174</td><td>nullfarm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>175</td><td>亗ぽてにゃん亗</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>176</td><td>ᴶᴺ ウィンドウ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>177</td><td>GodLuvsÜ mini2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>178</td><td>Gsub3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>179</td><td>Sakapus</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>180</td><td>乂 3zra2il 乂</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>181</td><td>FlämänEvery</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>182</td><td>ᵏ ˣすだこ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>183</td><td>ブッティ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>184</td><td>白ひげの別荘地</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>185</td><td>Pensolin</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>186</td><td>BuZZer Farm 1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>187</td><td>イケおじだった白ひげ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>188</td><td>ねねの農家</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>189</td><td>LingLingo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>190</td><td>ねねのワンコ農家</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>191</td><td>pickled octopus</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>192</td><td>Irumi</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>193</td><td>Bäby K</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>194</td><td>れがにゃんにゃん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>195</td><td>Pen太4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>196</td><td>ᴵᶠ Zunさん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>197</td><td>ウシ男</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>198</td><td>Lost mage</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>199</td><td>FlämänSub</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>200</td><td>GodLuvsÜ mini4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>201</td><td>Muhammad ツ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>202</td><td>ᴹᶠすだこ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>203</td><td>みすたーYMD</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>204</td><td>GodLuvsÜ mini3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>205</td><td>CAZA PINCHILAS</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>206</td><td>ᴹᴳPazz</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>207</td><td>武将レガ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>208</td><td>ねねのお友達</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>209</td><td>ブティックタケノコ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>210</td><td>ちびちぱ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>211</td><td>天才</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>212</td><td>engineer</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>213</td><td>nullです</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>214</td><td>ผู้ว่าการ139749026</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>215</td><td>にゃんこ先生sub5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>216</td><td>にゃんこ先生sub3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>217</td><td>にゃんこ先生sub4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>218</td><td>Pazz UK</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>219</td><td>hopperbaby</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>220</td><td>加持さん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>221</td><td>みすたーK</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>222</td><td>Flämänザコ1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>223</td><td>JS7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>224</td><td>ピリ辛 玉こんにゃく</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>225</td><td>農民りむる</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>48</td></tr><tr><td>226</td><td>IGREJA ll</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>227</td><td>めすたーKJ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>228</td><td>みすたーJ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>229</td><td>アオくまᵂᴷ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>230</td><td>Pen太5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>231</td><td>みせすkj</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>232</td><td>葬送のちぱーれん</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>233</td><td>Flämän ザコ2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>234</td><td>viendeptrai</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>235</td><td>Walther</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>236</td><td>わんこ先生Sub2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>237</td><td>LingLingj</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>238</td><td>badro farm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>239</td><td>Hopperkun</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>240</td><td>白ひげの友GARP</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>241</td><td>Muhammadkg</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>242</td><td>白ひげお好きでござる</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>243</td><td>iLTW3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>244</td><td>greGOfarM</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>245</td><td>どちらのお菊</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>246</td><td>わんこ先生Sub6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>247</td><td>Muhammad KG ツ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>248</td><td>もすたーKJ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>249</td><td>わんこ先生Sub5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>250</td><td>GREgoFARM</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>251</td><td>あおクマ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>252</td><td>Pen太6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>253</td><td>iLTW4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>254</td><td>Linglingpt</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>255</td><td>Gubernur138884487</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>256</td><td>みすたーX</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>257</td><td>iLTW5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>258</td><td>PetitHopper</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>259</td><td>ロロロロックリー</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>260</td><td>iLTW6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>261</td><td>Badro6farm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>262</td><td>食パンれが</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>263</td><td>なやまあかわ</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>264</td><td>Nâmđz</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>265</td><td>ฮนุ่ม</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>266</td><td>そちらのお菊</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>267</td><td>Hoppersan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>268</td><td>りむる農園</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>269</td><td>stoonboy</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>270</td><td>iLTW9</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>271</td><td>iLTW7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>272</td><td>Badrofarm7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
         </tbody>
       </table>
+      <div class="footer-note">Search, sort, and page controls are enabled.</div>
     </section>
   </div>
 
-<script>
-const chartLabels = ["AREA88", "BADRO月光", "DBsわんこ先生", "GREGO", "iLTWˣ", "Flämän", "Edward  NewGate", "ᴰᴮˢmattari", "HENタイ紳士銀", "お菊のさら", "ひよこひーろー", "JustHopper", "black foot S", "Mụ Q Dùng", "猫猫乄りむるん", "くそPANDA", "ᴰᴮˢZunさん", "すだこ", "ーNちゃー", "ظzaza"];
-const chartValues = [554470216, 363793525, 335974741, 333678293, 311700172, 216300610, 208512397, 199333015, 194633426, 179402735, 171602763, 167443566, 163337517, 159528073, 157010507, 149088188, 148978366, 148736727, 147982142, 147686496];
+  <script>
+    const top20Labels = ["AREA88", "BADRO月光", "GREGO", "DBsわんこ先生", "iLTWˣ", "Flämän", "ᴰᴮˢmattari", "Edward  NewGate", "すだこ", "JustHopper", "HENタイ紳士銀", "お菊のさら", "ひよこひーろー", "ーNちゃー", "black foot S", "Mụ Q Dùng", "猫猫乄りむるん", "PANKO ᴘᴀ", "ظzaza", "くそPANDA"];
+    const top20Data = [572181698, 399370608, 359565240, 342616238, 314869740, 261292840, 240068395, 208512397, 197145860, 195909854, 194633426, 192316408, 181696548, 167978162, 163337517, 159528073, 157010507, 152398624, 151500074, 149088188];
 
-new Chart(document.getElementById('dkpChart'), {
-  type: 'bar',
-  data: {
-    labels: chartLabels,
-    datasets: [{
-      label: 'DKP',
-      data: chartValues,
-      borderWidth: 1,
-      borderRadius: 10,
-      backgroundColor: chartLabels.map((_,i)=> {
-        const colors = [
-          'rgba(255,216,107,0.85)','rgba(110,231,255,0.85)','rgba(255,139,214,0.85)',
-          'rgba(180,160,255,0.85)','rgba(162,255,164,0.85)'
-        ];
-        return colors[i % colors.length];
-      })
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => ' ' + Number(ctx.raw).toLocaleString()
+    const chartEl = document.getElementById('dkpChart');
+    if (chartEl) {
+      new Chart(chartEl, {
+        type: 'bar',
+        data: {
+          labels: top20Labels,
+          datasets: [{
+            label: 'DKP',
+            data: top20Data,
+            borderWidth: 1,
+            borderRadius: 10
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: '#f5f7ff' }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#d7ddf5' },
+              grid: { color: 'rgba(255,255,255,0.08)' }
+            },
+            y: {
+              ticks: { color: '#f5f7ff' },
+              grid: { display: false }
+            }
+          }
         }
-      }
-    },
-    scales: {
-      x: {
-        ticks: { color: '#f7f2ff', callback: (value) => Number(value).toLocaleString() },
-        grid: { color: 'rgba(255,255,255,0.08)' }
-      },
-      y: {
-        ticks: { color: '#f7f2ff' },
-        grid: { display: false }
-      }
+      });
     }
-  }
-});
 
-$(document).ready(function() {
-  $('#rankingTable').DataTable({
-    pageLength: 20,
-    lengthMenu: [[10,20,50,100,-1],[10,20,50,100,'All']],
-    order: [[0, 'asc']],
-    scrollX: true
-  });
-});
-</script>
+    $(function() {
+      $('#rankingTable').DataTable({
+        pageLength: 20,
+        lengthMenu: [[10,20,50,100,-1], [10,20,50,100,'All']],
+        order: [[0, 'asc']],
+        scrollX: true
+      });
+    });
+  </script>
 </body>
 </html>
